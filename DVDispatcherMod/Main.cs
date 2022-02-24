@@ -1,4 +1,4 @@
-﻿using Harmony12;
+﻿using HarmonyLib;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -28,7 +28,7 @@ namespace DVDispatcherMod
         static bool Load(UnityModManager.ModEntry modEntry)
         {
             mod = modEntry;
-            HarmonyInstance harmony = HarmonyInstance.Create(modEntry.Info.Id);
+            Harmony harmony = new Harmony(modEntry.Info.Id);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             mod.OnToggle = OnToggle;
             mod.OnUpdate = OnUpdate;
@@ -82,8 +82,8 @@ namespace DVDispatcherMod
                 else
                 {
                     if (LoadingScreenManager.IsLoading || !WorldStreamingInit.IsLoaded ||
-                        !SingletonBehaviour<InventoryStartingItems>.Exists ||
-                        !SingletonBehaviour<InventoryStartingItems>.Instance.itemsLoaded)
+                        !SingletonBehaviour<StartingItemsController>.Exists ||
+                        !SingletonBehaviour<StartingItemsController>.Instance.itemsLoaded)
                         return;
                     else if (!floatLoaded)
                     {
